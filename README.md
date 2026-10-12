@@ -22,7 +22,7 @@ OrganizaYa reúne tareas, calendario, proyectos, archivos y accesos rápidos en 
 
 ## Sitio
 
-https://joselopez196.github.io/mi-sistema-pwa/
+https://joselopez196.github.io/OrganizaYa/
 
 ## Estado
 
