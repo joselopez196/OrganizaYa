@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: organizaya-api
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - NODE_ENV=production
+      - JWT_SECRET=super_secret_jwt_key_organizaya_production
+      - DATABASE_URL=postgresql://postgres:postgres_password@db:5432/organizaya
+      - ALLOWED_ORIGINS=https://joselopez196.github.io,http://localhost:3000
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: organizaya-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=organizaya
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./src/database/schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pgdata:
