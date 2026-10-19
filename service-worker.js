@@ -3,7 +3,7 @@
    - index.html: primero red, y si no hay internet usa la copia guardada (así recibes las actualizaciones).
    - Íconos, manifest y fuentes: primero la copia guardada.
    Sube el número de VERSION cada vez que publiques cambios. */
-const VERSION = 'v9';
+const VERSION = 'v10';
 const CACHE = 'organizaya-' + VERSION;
 const SHELL = [
   './',
@@ -57,6 +57,7 @@ const SHELL = [
   './js/view/screens/proyectos.js',
   './js/view/screens/tarea-form.js',
   './js/view/screens/tareas.js',
+  './js/view/spotlight.js',
   './js/view/state.js',
   './js/view/sync-ui.js',
   './js/view/theme.js'
