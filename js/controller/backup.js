@@ -24,9 +24,9 @@ async function importar(file){const inp=$('#imp');try{if(!file)return;const j=JS
 async function importar2(c,bl){try{
   const ids=new Set(c.files.map(f=>f.id)),blobs=[];
   for(const b of Array.isArray(bl)?bl:[]){if(b&&okId(b.id)&&ids.has(b.id)&&typeof b.data==='string'&&b.data.startsWith('data:'))blobs.push([b.id,d2b(b.data)])}
-  const have=new Set(blobs.map(x=>x[0]));
-  for(const f of S.files)await idb('readwrite',s=>s.delete(f.id));
+  const have=new Set(blobs.map(x=>x[0])),previous=S.files.slice();
+  if(blobs.length){if(!db)throw new Error('No hay almacenamiento para los archivos');const ok=await new Promise(resolve=>{let tx;try{tx=db.transaction('f','readwrite');const st=tx.objectStore('f');blobs.forEach(x=>st.put(x[1],x[0]));tx.oncomplete=()=>resolve(true);tx.onerror=tx.onabort=()=>resolve(false)}catch(e){resolve(false)}});if(!ok)throw new Error('No se pudieron guardar los archivos')}
   Object.keys(urls).forEach(k=>{try{URL.revokeObjectURL(urls[k])}catch(e){}delete urls[k]});
   replaceData(c);S.files=c.files.filter(f=>have.has(f.id)||f.aid);S.adv=c.adv;S.lastBackup=c.lastBackup;S.lv=c.lv;
-  for(const x of blobs)await idb('readwrite',s=>s.put(x[1],x[0]));
+  for(const f of previous)if(!have.has(f.id))await idb('readwrite',s=>s.delete(f.id));
   migL();save();draw();toast('Copia restaurada')}catch(e){toast('No se pudo restaurar la copia')}}

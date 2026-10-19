@@ -188,6 +188,15 @@ main{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env
   #md .box,.previewcard,.phoneframe{animation:none!important}
 }
 
+/* Ayuda, respaldo y sincronización */
+.backup-panel{margin-top:22px}.backup-panel .rs{margin-top:0}.save-mode{margin-top:3px;font-weight:600}.backup-help,.helpsection{margin-top:10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px}.backup-help summary{cursor:pointer;font-weight:700}.backup-help .m p{margin:.65em 0}.backup-help ol,.helpsection ol{padding-left:1.3rem}.backup-help li,.helpsection li{margin:.45rem 0}.helpsection{margin-bottom:12px}.helpsection h3{margin:0 0 8px}.helpsection p{color:var(--mut);margin:8px 0;max-width:78ch}.fieldlabel{display:block;margin:10px 0 4px;font-size:.84rem;font-weight:600}.syncsteps{padding-left:1.4rem}.syncsteps li{margin:.45rem 0}.syncmsg{min-height:1.5em;color:var(--acc);margin:12px 0}
+@media(max-width:720px){
+  .backup-panel .rs{align-items:flex-start}.backup-panel .rs>div{flex:1 1 100%}.backup-panel .rb{width:100%}.backup-panel .rb .btn{flex:1 1 145px}.backup-help,.helpsection{padding:12px}.syncsteps{padding-left:1.2rem}
+}
+@media(pointer:coarse){
+  .sw button{width:40px;height:40px}.f .a button,.x,.avo{min-height:40px}.backup-help summary{min-height:40px;display:flex;align-items:center}
+}
+
 /* Hoy: cabecera con logo pequeño y responsive */
 .homehead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 14px}
 .brandmini{display:flex;align-items:center;gap:12px;min-width:0}
