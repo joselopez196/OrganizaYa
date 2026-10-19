@@ -1,0 +1,30 @@
+{
+  "name": "organizaya-backend",
+  "version": "1.0.0",
+  "description": "API REST y servicio de sincronización para OrganizaYa (TaskFlow Hub)",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "organizaya",
+    "productivity",
+    "backend",
+    "express",
+    "api",
+    "sync"
+  ],
+  "author": "Jose Lopez <joseoctaviolopezrios196@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1"
+  }
+}
