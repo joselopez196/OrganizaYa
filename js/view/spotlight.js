@@ -21,6 +21,7 @@ const playChime = () => {
 function openSpotlight() {
   const sp = $('#spotlight');
   if (!sp) return;
+  if (!spotOpen) hPush();
   spotOpen = true;
   spotIdx = 0;
   sp.innerHTML = `<div class="spot-box" role="dialog" aria-modal="true" aria-label="Búsqueda rápida">
@@ -41,13 +42,15 @@ function openSpotlight() {
   if (inp) inp.focus();
 }
 
-function closeSpotlight() {
+function closeSpotlight(fp) {
+  const had = spotOpen;
+  spotOpen = false;
   const sp = $('#spotlight');
   if (sp) {
     sp.style.display = 'none';
     sp.innerHTML = '';
   }
-  spotOpen = false;
+  if (had && fp !== true) hBack();
 }
 
 function renderSpotlight(q) {

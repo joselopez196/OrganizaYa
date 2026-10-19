@@ -502,7 +502,7 @@ const hPush=()=>{try{history.pushState({ov:1},'');hs++}catch(e){}};
 /* Al cerrar con un botón no se retrocede el historial (history.go puede cerrar ventanas nuevas en algunos navegadores). Solo se cuenta. */
 const hBack=()=>{if(hs>0)hs--};
 addEventListener('popstate',()=>{if(skipPop>0){skipPop--;return}if(hs>0)hs--;
-  if(cfFn!==null)cfClose(true);else if(dk)dkClose(true);else if(vi)closeV(true);else if(mdOpen)closeM(true)});
+  if(cfFn!==null)cfClose(true);else if(typeof spotOpen!=='undefined'&&spotOpen)closeSpotlight(true);else if(dk)dkClose(true);else if(vi)closeV(true);else if(mdOpen)closeM(true)});
 /* Ventana de confirmacion propia (confirm() nativo puede estar bloqueado) */
 let cfFn=null;
 function ask(msg,ok,fn){let w=$('#cf');if(!w){w=document.createElement('div');w.id='cf';w.onclick=e=>{if(e.target===w)cfClose()};document.body.appendChild(w)}
@@ -586,7 +586,7 @@ document.addEventListener('keydown',e=>{if(dk&&e.key==='Escape'){e.stopPropagati
 <script>/* js/view/nav.js */
 /* ===== VISTA · js/view/nav.js =====
    Menú de navegación y dibujo de la pantalla activa (router de vistas). */
-const navX=()=>'<button onclick="cycleTheme()" class="sm">Tema: '+TL[theme]+'</button>'+(dip?'<button onclick="instalar()" class="sm">Instalar app</button>':(isIOSDevice()&&!isStandalone()?'<button onclick="instalarIOS()" class="sm">Instalar en iPhone/iPad</button>':''))+(cloud&&!sbOn?'':'<button onclick="sbUi()" class="sm">'+(sbOn?'Sincronización: activa':'Sincronizar dispositivos')+'</button>');
+const navX=()=>'<button onclick="cycleTheme()" class="sm">Tema: '+TL[theme]+'</button>'+(!isStandalone()?'<button onclick="instalarApp()" class="sm">📲 Instalar como App</button>':'')+(cloud&&!sbOn?'':'<button onclick="sbUi()" class="sm">'+(sbOn?'Sincronización: activa':'Sincronizar dispositivos')+'</button>');
 function nav(){$('#nav').innerHTML='<h1><img src="icons/organizaya-mark.svg" alt=""><span>OrganizaYa</span></h1><button class="nav-search" onclick="openSpotlight()" aria-label="Búsqueda rápida"><span style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Buscar</span><span class="kbd">Ctrl K</span></button>'+[['hoy','Hoy'],['tareas','Tareas'],['calendario','Calendario'],['proyectos','Proyectos'],['archivos','Archivos'],['accesos','Accesos'],['ayuda','Cómo usar']].map(([k,l])=>`<button class="${tab===k?'on':''} ${k==='ayuda'?'nm':''}" onclick="tab='${k}';pj=null;draw()">${l}</button>`).join('')+'<div class="sp"></div><div class="sm" style="padding:0 12px 4px">Respaldo</div><button onclick="exportar()" class="sm">Exportar todo</button><button onclick="$(\'#imp\').click()" class="sm">Importar copia</button>'+navX()+'<button onclick="shortcutsModal()" class="sm">Atajos (?) <span class="kbd">?</span></button><input id="imp" type="file" accept=".json" hidden onchange="importar(this.files[0])">'}
 let lastTab=null;
 function draw(){nav();if(tab!==lastTab){window.scrollTo(0,0);lastTab=tab;const mm=$('#main');mm.classList.add('anim');clearTimeout(draw.h);draw.h=setTimeout(()=>mm.classList.remove('anim'),1000)}({hoy:vHoy,tareas:vTareas,calendario:vCal,proyectos:vProyectos,archivos:vArchivos,accesos:vAccesos,ayuda:vAyuda})[tab]();countUp();setTimeout(()=>{newId=null},800);document.querySelectorAll('.sub,.empty').forEach(e=>{if(!e.children.length)e.textContent=capW(e.textContent)})}
@@ -611,7 +611,7 @@ function vHoy(){
   loadPv(S.files.slice(-6));
   const lb=S.lastBackup,dias=lb?Math.floor((new Date(td)-new Date(lb))/864e5):null,old=dias===null||dias>=7;
   const cuando=dias===null?'Aún no haces ninguna copia':dias===0?'Última copia: hoy':dias===1?'Última copia: ayer':'Última copia: hace '+dias+' días';
-  $('#main').insertAdjacentHTML('beforeend',`<div class="rs" style="${old?'border-color:#d97706':''}"><span class="m">${cuando}${old&&dias!==null?'. Haz otra':''} · ${cloud?(sbOn?'sincronizado con tu cuenta ('+esc(sb&&sb.em||'')+')':'sincronizado con tu cuenta de Claude'):'guardado en este dispositivo'}</span><span class="rb"><button class="btn g" onclick="exportar()">Exportar todo</button><button class="btn g" onclick="$('#imp').click()">Importar copia</button><button class="btn g" onclick="cycleTheme()">Tema: ${TL[theme]}</button>${dip?'<button class="btn g" onclick="instalar()">Instalar app</button>':''}${cloud&&!sbOn?'':'<button class="btn g" onclick="sbUi()">'+(sbOn?'Sincronización':'Sincronizar dispositivos')+'</button>'}${cloud&&ast&&S.files.some(f=>!f.aid)?'<button class="btn g" onclick="syncFiles()">Subir archivos a la nube</button>':''}</span></div><div class="storage-tag" id="storageStatus">Almacenamiento: Calculando...</div>${cloud&&bkc?'<details class="m" style="margin-top:8px"><summary style="cursor:pointer">Copias automáticas en la nube</summary><div id="bkl"></div></details>':''}`);loadBk();setTimeout(checkStorageUsage,100);
+  $('#main').insertAdjacentHTML('beforeend',`<div class="rs" style="${old?'border-color:#d97706':''}"><span class="m">${cuando}${old&&dias!==null?'. Haz otra':''} · ${cloud?(sbOn?'sincronizado con tu cuenta ('+esc(sb&&sb.em||'')+')':'sincronizado con tu cuenta de Claude'):'guardado en este dispositivo'}</span><span class="rb"><button class="btn g" onclick="exportar()">Exportar todo</button><button class="btn g" onclick="$('#imp').click()">Importar copia</button><button class="btn g" onclick="cycleTheme()">Tema: ${TL[theme]}</button>${!isStandalone()?'<button class="btn g" onclick="instalarApp()">📲 Instalar app</button>':''}${cloud&&!sbOn?'':'<button class="btn g" onclick="sbUi()">'+(sbOn?'Sincronización':'Sincronizar dispositivos')+'</button>'}${cloud&&ast&&S.files.some(f=>!f.aid)?'<button class="btn g" onclick="syncFiles()">Subir archivos a la nube</button>':''}</span></div><div class="storage-tag" id="storageStatus">Almacenamiento: Calculando...</div>${cloud&&bkc?'<details class="m" style="margin-top:8px"><summary style="cursor:pointer">Copias automáticas en la nube</summary><div id="bkl"></div></details>':''}`);loadBk();setTimeout(checkStorageUsage,100);
 }
 
 </script>
@@ -782,6 +782,7 @@ const playChime = () => {
 function openSpotlight() {
   const sp = $('#spotlight');
   if (!sp) return;
+  if (!spotOpen) hPush();
   spotOpen = true;
   spotIdx = 0;
   sp.innerHTML = `<div class="spot-box" role="dialog" aria-modal="true" aria-label="Búsqueda rápida">
@@ -802,13 +803,15 @@ function openSpotlight() {
   if (inp) inp.focus();
 }
 
-function closeSpotlight() {
+function closeSpotlight(fp) {
+  const had = spotOpen;
+  spotOpen = false;
   const sp = $('#spotlight');
   if (sp) {
     sp.style.display = 'none';
     sp.innerHTML = '';
   }
-  spotOpen = false;
+  if (had && fp !== true) hBack();
 }
 
 function renderSpotlight(q) {
@@ -1132,9 +1135,8 @@ function notiCheck(force){try{if(!nOk()||Notification.permission!=='granted')ret
   const direct=()=>{try{new Notification(t,opt)}catch(e){}};
   if('serviceWorker' in navigator)navigator.serviceWorker.getRegistration().then(r=>r?r.showNotification(t,opt):direct()).catch(direct);else direct()}catch(e){}}
 function notiOn(){try{Notification.requestPermission().then(p=>{if(p==='granted'){toast('Notificaciones activadas');notiCheck(true)}else toast('No se dieron permisos de notificación');draw()})}catch(e){toast('Este navegador no permite notificaciones')}}
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)notiCheck()});
-addEventListener('online',()=>{if(sb&&!cloud)sbInit();else sbPoll()});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(sb&&!cloud)sbInit();else sbPoll()}});
+function instalarApp(){if(isStandalone()){toast('La app ya está instalada en tu dispositivo');return}if(isIOSDevice()){instalarIOS();return}if(dip){dip.prompt().then(()=>{dip.userChoice.then(c=>{if(c&&c.outcome==='accepted')toast('¡App instalada con éxito!');dip=null;draw()})}).catch(()=>{});return}openM(`<div class="box"><div class="m">OrganizaYa · Instalar como App</div><b style="font-size:1.2rem">Instalar en tu dispositivo</b><p>Para abrir OrganizaYa como una <b>App independiente</b> (a pantalla completa y sin barra de navegador):</p><ul style="padding-left:20px;margin:8px 0;line-height:1.6"><li><b>En Android / Chrome:</b> Toca el menú (⋮) arriba a la derecha y selecciona <b>"Instalar aplicación"</b> o <b>"Añadir a la pantalla de inicio"</b>.</li><li><b>En iPhone / Safari:</b> Toca el botón <b>Compartir</b> (cuadro con flecha ↑) y luego <b>"Añadir a pantalla de inicio"</b>.</li><li><b>En Computadora (Chrome / Edge):</b> Haz clic en el ícono de instalar en la barra de direcciones o en Menú → <b>"Instalar OrganizaYa"</b>.</li></ul><div class="row" style="margin:12px 0 0;justify-content:flex-end"><button class="btn" onclick="closeM()">Entendido</button></div></div>`)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.it,.pc,.pv')){e.preventDefault();e.target.click()}});
 function pwa(){try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register('./service-worker.js').then(reg=>{reg.addEventListener('updatefound',()=>{const nw=reg.installing;if(nw){nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller){toast('Nueva versión disponible · Actualiza la página')}})}})}).catch(()=>{})}}catch(e){}try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{})}catch(e){}}
 
 </script>
