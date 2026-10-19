@@ -15,7 +15,7 @@ const hPush=()=>{try{history.pushState({ov:1},'');hs++}catch(e){}};
 /* Al cerrar con un botón no se retrocede el historial (history.go puede cerrar ventanas nuevas en algunos navegadores). Solo se cuenta. */
 const hBack=()=>{if(hs>0)hs--};
 addEventListener('popstate',()=>{if(skipPop>0){skipPop--;return}if(hs>0)hs--;
-  if(cfFn!==null)cfClose(true);else if(dk)dkClose(true);else if(vi)closeV(true);else if(mdOpen)closeM(true)});
+  if(cfFn!==null)cfClose(true);else if(typeof spotOpen!=='undefined'&&spotOpen)closeSpotlight(true);else if(dk)dkClose(true);else if(vi)closeV(true);else if(mdOpen)closeM(true)});
 /* Ventana de confirmacion propia (confirm() nativo puede estar bloqueado) */
 let cfFn=null;
 function ask(msg,ok,fn){let w=$('#cf');if(!w){w=document.createElement('div');w.id='cf';w.onclick=e=>{if(e.target===w)cfClose()};document.body.appendChild(w)}
