@@ -9,5 +9,6 @@ if((S.lv||0)<6){DL.filter(d=>['Google','Maps','Fotos'].includes(d.name)).forEach
 if((S.lv||0)<7){S.links.forEach(l=>{if(/whatsapp/i.test(hostOf(l.url)))l.url='whatsapp://send'});ch=true}
 if((S.lv||0)<8){const nm=x=>x.toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g,''),have=new Set(S.links.flatMap(l=>[nm(l.name),hostOf(l.url)]));NEW.forEach(a=>{const u=mkU(a[1]);if(!have.has(nm(a[0]))&&!have.has(hostOf(u)))S.links.push({id:uid(),name:a[0],url:u,color:a[2]})});ch=true}
 if((S.lv||0)<9){S.links.forEach(l=>{if(hostOf(l.url)==='pkg:com.facebook.lite')l.name='Facebook Lite'});ch=true}
-S.lv=9;return ch}
+if((S.lv||0)<10){const gh=S.links.find(l=>hostOf(l.url)==='github.com');if(gh){gh.name='APP';gh.url='https://joselopez196.github.io/OrganizaYa-WEB/'}ch=true}
+S.lv=10;return ch}
 if(migL())saveLocal();
