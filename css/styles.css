@@ -238,3 +238,29 @@ main{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env
 .home-section{margin:24px 0 28px}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.section-heading h3{margin:0}.section-heading p{margin:4px 0 0}.home-links .lw{cursor:grab}.home-links .lw:active{cursor:grabbing}.home-links .lw.dragging{opacity:.4;transform:scale(.97)}.home-links .lk{min-height:112px;box-shadow:0 8px 24px -22px var(--acc)}.home-links .lk b{box-shadow:0 8px 16px -10px var(--c)}
 .day-clear{margin:24px 0;padding:28px 20px;text-align:center;border:1px dashed color-mix(in srgb,var(--acc) 48%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--acc) 5%,var(--card))}.day-clear-icon{display:grid;place-items:center;width:54px;height:54px;margin:0 auto 12px;border-radius:17px;background:color-mix(in srgb,var(--acc) 16%,var(--card));color:var(--acc);font-size:1.8rem;font-weight:800}.day-clear h3{margin:0 0 5px;font-size:1.15rem}.day-clear p{color:var(--mut);margin:0 auto 16px;max-width:420px}.home-empty{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.late-heading{color:#ef7878}.completed-today{margin:20px 0;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.completed-today summary{cursor:pointer;font-weight:700}
 @media(max-width:720px){.homehead{align-items:flex-start;flex-direction:column;margin-bottom:20px}.home-actions{width:100%}.home-actions .btn{flex:1}.today-intro{align-items:flex-start;flex-direction:column;gap:4px}.today-intro .clk{text-align:left;margin-top:2px}.quick-create{padding:13px;border-radius:15px}.quick-create .hq .btn{width:100%}.task-options-grid{grid-template-columns:1fr}.task-options-grid textarea{grid-column:auto}.home-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.home-stats .st{padding:12px}.home-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.home-links .lk{min-height:100px}.section-heading{align-items:flex-start}.section-heading .btn{padding:7px 10px;font-size:.8rem}}
+
+
+/* ===== Panel profesional OrganizaYa: progreso, analítica y concentración ===== */
+.progress-label{font-size:1.35rem;letter-spacing:-.04em;color:var(--acc)}
+.day-progress{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.day-progress span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--acc),var(--brand,var(--acc)));transition:width .35s ease}
+.progress-caption{margin-top:7px}
+.week-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;padding:14px 12px 10px;border:1px solid var(--line);border-radius:16px;background:var(--card);min-height:150px}
+.week-day{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;color:var(--mut);font-size:.72rem}
+.week-day b{font-size:.78rem;color:var(--ink)}
+.week-bar-wrap{height:82px;width:min(100%,28px);display:flex;align-items:flex-end;justify-content:center;border-radius:99px;background:color-mix(in srgb,var(--acc) 7%,var(--line));overflow:hidden}
+.week-bar{display:block;width:100%;min-height:3px;border-radius:99px 99px 4px 4px;background:linear-gradient(180deg,var(--acc),color-mix(in srgb,var(--acc) 55%,#818cf8));transition:height .25s ease}
+.focus-panel{max-width:540px;text-align:center}
+.focus-kicker{font-size:.7rem;font-weight:800;letter-spacing:.16em;color:var(--acc);margin-bottom:8px}
+.focus-title{display:block;font-size:1.55rem;letter-spacing:-.04em}
+.focus-panel .sub{max-width:390px;margin:7px auto 14px}
+.focus-panel .fieldlabel{text-align:left}
+.focus-select{width:100%;padding:11px 12px;margin-bottom:6px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.focus-clock{font-variant-numeric:tabular-nums;font-size:clamp(3.4rem,13vw,5.2rem);font-weight:800;letter-spacing:-.07em;line-height:1.1;margin:20px 0 14px}
+.focus-progress{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.focus-progress span{display:block;width:0;height:100%;border-radius:inherit;background:var(--acc);transition:width .25s linear}
+.focus-status{min-height:1.4em;color:var(--mut);font-size:.86rem}
+.focus-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0}
+.focus-foot{padding-top:12px;border-top:1px solid var(--line);font-size:.78rem;color:var(--mut)}
+@media(max-width:560px){.week-chart{gap:5px;padding:10px 7px}.week-bar-wrap{height:66px;width:20px}.week-day{font-size:.65rem}.focus-actions .btn{flex:1 1 100px}.progress-label{font-size:1.15rem}}
+@media(prefers-reduced-motion:reduce){.day-progress span,.week-bar,.focus-progress span{transition:none}}
