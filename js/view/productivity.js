@@ -32,10 +32,14 @@ function focusStart(){
 }
 function focusPause(){
   if(focusData.running)focusData.remaining=Math.max(0,Math.ceil((focusData.endAt-Date.now())/1000));
-  focusData.running=false;focusData.endAt=0;focusPersist();focusRender();
+  focusData.running=false;focusData.endAt=0;
+  if(focusTimer){clearInterval(focusTimer);focusTimer=null}
+  focusPersist();focusRender();
 }
 function focusReset(){
-  focusData.running=false;focusData.endAt=0;focusData.remaining=focusData.duration;focusPersist();focusRender();
+  focusData.running=false;focusData.endAt=0;focusData.remaining=focusData.duration;
+  if(focusTimer){clearInterval(focusTimer);focusTimer=null}
+  focusPersist();focusRender();
 }
 function focusTick(){
   if(!focusData.running)return;
