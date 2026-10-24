@@ -72,3 +72,24 @@ function voiceTaskStart(){
     rec.start();
   }catch(e){toast('No se pudo iniciar el dictado en este dispositivo')}
 }
+
+
+/* Exportación de informe: CSV compatible con Excel y hojas de cálculo. */
+function exportTasksCsv(){
+  const safeCell=value=>{
+    let text=String(value??'').replace(/\r?\n/g,' ').trim();
+    if(/^[=+@-]/.test(text))text="'"+text;
+    return '"'+text.replace(/"/g,'""')+'"';
+  };
+  const headers=['Tarea','Proyecto','Fecha','Hora','Prioridad','Estado','Notas','Subtareas completadas','Total subtareas'];
+  const rows=S.tasks.map(t=>{
+    const subs=Array.isArray(t.subs)?t.subs:[];
+    const completed=subs.filter(s=>s.d===true).length;
+    return [t.title,pn(t.p),t.due||'',t.time||'',({0:'Baja',1:'Media',2:'Alta'})[Number(t.pri)||0]||'Baja',t.done?'Completada':'Pendiente',t.note||'',completed,subs.length].map(safeCell).join(',');
+  });
+  const csv='\uFEFF'+[headers.map(safeCell).join(','),...rows].join('\r\n');
+  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  const a=document.createElement('a');a.href=url;a.download='organizaya-tareas-'+today()+'.csv';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast('Informe CSV preparado con '+S.tasks.length+' tareas');
+}
