@@ -3,7 +3,7 @@
    - index.html: primero red, y si no hay internet usa la copia guardada (así recibes las actualizaciones).
    - Íconos, manifest y fuentes: primero la copia guardada.
    Sube el número de VERSION cada vez que publiques cambios. */
-const VERSION = 'v13';
+const VERSION = 'v14';
 const CACHE = 'organizaya-' + VERSION;
 const SHELL = [
   './',
@@ -67,7 +67,7 @@ const SHELL = [
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE)
-      .then((c) => Promise.all(SHELL.map((u) => c.add(u).catch(() => null))))
+      .then((c) => Promise.all(SHELL.map((u) => c.add(u).catch((err) => { console.warn('[OrganizaYa] No se pudo guardar en caché:', u, err); return null; }))))
       .then(() => self.skipWaiting())
   );
 });
