@@ -52,7 +52,7 @@ function vHoy(){
       ${go('goHec',doneToday.length,'Completadas hoy')}
     </div>
     <section class="home-section">
-      <div class="section-heading"><div><h3>Tu progreso de hoy</h3><p class="m">Tareas completadas frente a las programadas para hoy.</p></div><strong class="progress-label">${progress}%</strong></div>
+      <div class="section-heading"><div><h3>Tu progreso de hoy</h3><p class="m">Tareas completadas frente a las programadas para hoy.</p></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><strong class="progress-label">${progress}%</strong><button class="btn g" onclick="exportTasksCsv()">Exportar CSV</button></div></div>
       <div class="day-progress" role="progressbar" aria-label="Progreso de hoy" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progress}"><span style="width:${progress}%"></span></div>
       <p class="m progress-caption">${doneToday.length} completada${doneToday.length===1?'':'s'} · ${todayDue.length} pendiente${todayDue.length===1?'':'s'} con fecha de hoy</p>
     </section>
