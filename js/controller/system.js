@@ -1,7 +1,7 @@
 /* ===== CONTROLADOR · js/controller/system.js =====
    Controlador del sistema: instalación, notificaciones, errores, teclado, conexión. */
 addEventListener('error',e=>{try{toast('Error: '+(e.message||'desconocido')+(e.lineno?' (línea '+e.lineno+')':''))}catch(_){}});
-addEventListener('unhandledrejection',e=>{try{toast('Error: '+((e.reason&&e.reason.message)||e.reason||'desconocido'))}catch(_){}});
+addEventListener('unhandledrejection',e=>{try{console.error('[OrganizaYa] Promesa rechazada:',e.reason);toast('Error: '+((e.reason&&e.reason.message)||e.reason||'desconocido'))}catch(_){}});
 let dip=null;
 const isIOSDevice=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const isStandalone=()=>window.matchMedia?.('(display-mode: standalone)').matches||window.navigator.standalone===true;
