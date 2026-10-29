@@ -22,8 +22,6 @@ OrganizaYa reúne tareas, calendario, proyectos, archivos y accesos rápidos en 
 
 ## Sitio
 
-https://joselopez196.github.io/OrganizaYa/
-
 ## Estado
 
 Versión en preparación para empaquetado Android y publicación en Google Play.
