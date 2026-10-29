@@ -20,8 +20,6 @@ OrganizaYa reúne tareas, calendario, proyectos, archivos y accesos rápidos en 
 
 **TaskFlow Hub** es la versión de nombre en inglés de la marca.
 
-## Sitio
-
 ## Estado
 
-Versión en preparación para empaquetado Android y publicación en Google Play.
+Versión en preparación 
